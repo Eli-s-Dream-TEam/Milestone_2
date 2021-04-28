@@ -1,7 +1,7 @@
 // Imports
 const express = require("express");
 const router = express.Router();
-const { getModel, addModel } = require("../../model/Model");
+const { getModel, addModel, deleteModel } = require("../../model/Model");
 
 // Route: /api/model
 
@@ -38,6 +38,7 @@ router.get("/", (request, response) => {
   // If id wasn't provided - bad request
   if (!query.model_id) {
     response.status(400).json({ message: "Please provide a model id" });
+    return;
   }
 
   // Get the model from the database
@@ -48,6 +49,7 @@ router.get("/", (request, response) => {
     response
       .status(400)
       .json({ message: "Not a valid model id, please try again" });
+    return;
   }
 
   // Return the model
@@ -64,17 +66,17 @@ router.delete("/", (request, response) => {
 
   if (!query.model_id) {
     response.status(400).json({ message: "Bad request" });
+    return;
   }
 
   // Delete model
   flag = deleteModel(query.model_id);
-  if (flag === "false") {
+  if (!flag) {
     response
       .status(400)
       .json({ message: "Not a valid model id, please try again" });
-  }
-  else {
-    response.status(200).json({ message: "Model delete complete" });
+  } else {
+    response.status(200).json({ message: "Model deleted" });
   }
 });
 

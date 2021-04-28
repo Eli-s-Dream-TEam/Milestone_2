@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  max-width: max-content;
+  gap: 1rem;
+}
+
+.logo {
+  width: 3rem;
+  height: auto;
+  color: var(--primary);
+  transform: rotate(0deg);
+  transition-duration: 100ms;
+}
+
+.title {
+  color: white;
+}
+
+.header:hover > .logo {
+  transform: rotate(25deg);
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}

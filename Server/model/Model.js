@@ -42,10 +42,10 @@ function deleteModel(id) {
   const mymodel = models.find((model) => model.id === id);
   // No model found
   if (!mymodel) {
-    return "false";
+    return false;
   }
   models.splice(models.indexOf(mymodel), 1);
-  return "true";
+  return true;
 }
 
 /**

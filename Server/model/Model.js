@@ -36,7 +36,7 @@ function addModel(type, data) {
 
 /**
  * @param {String} id
- * @returns {String} true or false
+ * @returns {String} 'false' means failed to delete, o.w everything is fine
  */
 function deleteModel(id) {
   const mymodel = models.find((model) => model.id === id);

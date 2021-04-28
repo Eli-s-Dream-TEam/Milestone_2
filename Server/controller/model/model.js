@@ -67,8 +67,15 @@ router.delete("/", (request, response) => {
   }
 
   // Delete model
-
-  response.status(200).json({ message: "placeholder" });
+  flag = deleteModel(query.model_id);
+  if (flag === "false") {
+    response
+      .status(400)
+      .json({ message: "Not a valid model id, please try again" });
+  }
+  else {
+    response.status(200).json({ message: "Model delete complete" });
+  }
 });
 
 module.exports = router; // This exports the router object, meaning all the paths that are used in this file

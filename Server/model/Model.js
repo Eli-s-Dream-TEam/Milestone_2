@@ -36,9 +36,16 @@ function addModel(type, data) {
 
 /**
  * @param {String} id
+ * @returns {String} true or false
  */
 function deleteModel(id) {
-  // from /delete
+  const mymodel = models.find((model) => model.id === id);
+  // No model found
+  if (!mymodel) {
+    return "false";
+  }
+  models.splice(models.indexOf(mymodel), 1);
+  return "true";
 }
 
 /**

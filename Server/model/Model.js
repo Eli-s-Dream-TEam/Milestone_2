@@ -1,26 +1,5 @@
-const { uid } = require("uid");
+const Model = require("./ModelScehma")
 
-let models = [];
-
-let Model = class {
-  constructor(id, type, data) {
-    this.id = id;
-    this.status = "pending"; // this will change from trainModel()
-    this.type = type; // string "hybrid" or "regression"
-    this.upload_time = new Date().toISOString(); //21-04-22T19:15:32+02.00
-    this.trainModel(data);
-  }
-
-  trainModel(data) {
-    // .. open thread train the csv
-    this.status = "ready";
-  }
-
-  testModel(data) {
-    if (this.status === "ready") {
-    }
-  }
-};
 
 /**
  * @param {String} type "hybrid"/"regression"
@@ -28,10 +7,14 @@ let Model = class {
  * @returns {String} created model id
  */
 function addModel(type, data) {
-  // from /get
-  const id = uid(); // generates random id
-  models.push(new Model(id, type, data));
-  return id;
+  new Model({type, status: "pending"}).save(function(err, model) {
+    if(err) {
+      console.log(err);
+      return null;
+    }
+    return {model_id: model._id, status: model.status, upload_time: model.createdAt};
+  })
+
 }
 
 /**

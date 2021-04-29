@@ -1,6 +1,8 @@
 // Imports
-const express = require("express"); // Get the express library
 require("dotenv").config(); // This is for the .env (enviornment variables) file, it fetches it basically
+const mongoose = require("./mongoose")
+const express = require("express"); // Get the express library
+
 
 // Routers
 const model = require("./controller/model/model"); // Get all the '/api/model' routes
@@ -21,7 +23,10 @@ app.use("/api/model", model);
 app.use("/api/models", models);
 app.use("/api/anomaly", anomaly);
 
+
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });
+

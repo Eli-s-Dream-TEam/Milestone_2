@@ -10,21 +10,39 @@ const { getModel, addModel, deleteModel } = require("../../model/Model");
  * @method POST
  * @description Creates and trains a new model
  */
-router.post("/", (request, response) => {
+router.post("/", async (request, response) => {
   const body = request.body;
   const query = request.query;
 
   if (query.model_id) {
-    // return ML fODEor that id
+    // return status for that id
   }
 
+  // Invalid request check
   if (!query.model_type || !body.train_data) {
     response.status(400).json({ message: "Bad request" });
+    return;
   }
 
-  const id = addModel(query.model_type, body.train_data);
+  const type = query.model_type;
+  const data = body.train_data;
 
-  response.status(200).json(getModel(id));
+  // Invalid type check
+  if (type !== "hybrid" && type !== "regression") {
+    response.status(400).json({ message: "Invalid model type provided" });
+    return;
+  }
+
+  const model = await addModel(type, data);
+
+  // Data base error
+  if (!model) {
+    response.status(500).json({ message: "Database error" });
+    return;
+  }
+
+  // Model added
+  response.status(200).json(model);
 });
 
 /**

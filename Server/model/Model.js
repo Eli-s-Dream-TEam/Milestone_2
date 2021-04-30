@@ -17,6 +17,23 @@ function addModel(type, data) {
 
 }
 
+
+/**
+ * @param {String} id
+ */
+ function getModel(id) {
+    
+  Model.find({"_id" : ObjectId(id)}, function (err, model) {
+    if (err) {
+      console.log(err);
+      return null;
+    }
+    return model;
+  });
+  
+}
+
+
 /**
  * @param {String} id
  * @returns {String} 'false' means failed to delete, o.w everything is fine
@@ -31,25 +48,6 @@ function deleteModel(id) {
   return true;
 }
 
-/**
- * @param {String} id
- */
-function getModel(id) {
-  // Finds the model by the provided id, model is null if none is found
-  const model = models.find((model) => model.id === id);
-
-  // No model found
-  if (!model) {
-    return null;
-  }
-
-  // Return an abbreviated version of the model
-  return {
-    model_id: model.id,
-    upload_time: model.upload_time,
-    status: model.status,
-  };
-}
 
 /**
  * @returns {Array[Model]}

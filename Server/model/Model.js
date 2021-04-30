@@ -1,60 +1,40 @@
-const Model = require("./ModelScehma")
-
+const Model = require("./ModelScehma");
 
 /**
  * @param {String} type "hybrid"/"regression"
  * @param {Data} data csv data
- * @returns {String} created model id
+ * @returns {Object} Model data
  */
-function addModel(type, data) {
-  new Model({type, status: "pending"}).save(function(err, model) {
-    if(err) {
-      console.log(err);
-      return null;
-    }
-    return {model_id: model._id, status: model.status, upload_time: model.createdAt};
-  })
-
+async function addModel(type, data) {
+  try {
+    const newModel = new Model({ type, status: "pending" });
+    const savedModel = await newModel.save();
+    return {
+      model_id: savedModel._id,
+      status: savedModel.status,
+      upload_time: savedModel.createdAt,
+    };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
-
 
 /**
  * @param {String} id
  */
- function getModel(id) {
-    
-  Model.find({"_id" : ObjectId(id)}, function (err, model) {
-    if (err) {
-      console.log(err);
-      return null;
-    }
-    return model;
-  });
-  
-}
-
+function getModel(id) {}
 
 /**
  * @param {String} id
  * @returns {String} 'false' means failed to delete, o.w everything is fine
  */
-function deleteModel(id) {
-  const mymodel = models.find((model) => model.id === id);
-  // No model found
-  if (!mymodel) {
-    return false;
-  }
-  models.splice(models.indexOf(mymodel), 1);
-  return true;
-}
-
+function deleteModel(id) {}
 
 /**
  * @returns {Array[Model]}
  */
-function getAllModels() {
-  return models.map((model) => getModel(model.id));
-}
+function getAllModels() {}
 
 // Only functions exported here can be used outside this file (once imported)
 module.exports = {

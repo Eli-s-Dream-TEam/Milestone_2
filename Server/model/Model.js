@@ -20,16 +20,42 @@ async function addModel(type, data) {
   }
 }
 
+
 /**
  * @param {String} id
  */
-function getModel(id) {}
+ async function getModel(id) {
+
+  try {
+    const foundModel = await Model.findById(id);
+    return {
+      model_id: foundModel._id,
+      upload_time: foundModel.createdAt,
+      status: foundModel.status
+    };
+    
+  } catch(err) {
+    console.log(err);
+    return null;
+  } 
+
+}
 
 /**
  * @param {String} id
  * @returns {String} 'false' means failed to delete, o.w everything is fine
  */
-function deleteModel(id) {}
+ async function deleteModel(id) {
+
+  try {
+    const deletedModel = await Model.findByIdAndDelete(id);
+    return deletedModel;
+  } catch(err) {
+    console.log(err);
+    return null;
+  }     
+}
+
 
 /**
  * @returns {Array[Model]}

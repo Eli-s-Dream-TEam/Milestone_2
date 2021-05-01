@@ -50,7 +50,7 @@ router.post("/", async (request, response) => {
  * @method GET
  * @description Retrieves a model, given the model_id inside query is valid
  */
-router.get("/", (request, response) => {
+router.get("/", async (request, response) => {
   const query = request.query; // get query object
 
   // If id wasn't provided - bad request
@@ -60,16 +60,14 @@ router.get("/", (request, response) => {
   }
 
   // Get the model from the database
-  const model = getModel(query.model_id);
-
+  const model = await getModel(query.model_id);
   // The model is null = the id is not valid
-  if (!model) {
-    response
-      .status(400)
-      .json({ message: "Not a valid model id, please try again" });
+  if (model == null) {
+    
+    response.status(400).json({ message: "Not a valid model id, please try again" });
     return;
   }
-
+  
   // Return the model
   response.status(200).json(model);
 });
@@ -79,7 +77,7 @@ router.get("/", (request, response) => {
  * @method DELETE
  * @description Deletes a model, given the model_id inside the query object
  */
-router.delete("/", (request, response) => {
+router.delete("/", async (request, response) => {
   const query = request.query; // get query object
 
   if (!query.model_id) {
@@ -88,8 +86,8 @@ router.delete("/", (request, response) => {
   }
 
   // Delete model
-  flag = deleteModel(query.model_id);
-  if (!flag) {
+  model = await deleteModel(query.model_id);
+  if (!model) {
     response
       .status(400)
       .json({ message: "Not a valid model id, please try again" });

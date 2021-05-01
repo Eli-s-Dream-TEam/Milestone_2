@@ -3,8 +3,6 @@ const express = require("express");
 const router = express.Router();
 const { getModel, addModel, deleteModel } = require("../../model/Model");
 
-// Route: /api/model
-
 /**
  * @path /api/model
  * @method POST
@@ -63,11 +61,12 @@ router.get("/", async (request, response) => {
   const model = await getModel(query.model_id);
   // The model is null = the id is not valid
   if (model == null) {
-    
-    response.status(400).json({ message: "Not a valid model id, please try again" });
+    response
+      .status(400)
+      .json({ message: "Not a valid model id, please try again" });
     return;
   }
-  
+
   // Return the model
   response.status(200).json(model);
 });

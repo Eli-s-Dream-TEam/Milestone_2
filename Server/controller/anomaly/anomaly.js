@@ -17,7 +17,7 @@ router.post("/", async (request, response) => {
     return;
   }
 
-  testModel(id, data)
+  await testModel(id, data)
     .then((result) => {
       response.status(200).json(result);
     })

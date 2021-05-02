@@ -117,7 +117,11 @@ async function getModel(id) {
 async function deleteModel(id) {
   try {
     const deletedModel = await Model.findByIdAndDelete(id);
-    return deletedModel;
+    return {
+      model_id: deletedModel._id,
+      status: deletedModel.status,
+      upload_time: deletedModel.createdAt,
+    };
   } catch (err) {
     console.log(err);
     return null;
@@ -127,7 +131,18 @@ async function deleteModel(id) {
 /**
  * @returns {Array[Model]}
  */
-function getAllModels() {}
+async function getAllModels() {
+  try {
+    const models = await Model.find();
+    return models.map((model) => ({
+      model_id: model._id,
+      status: model.status,
+      upload_time: model.createdAt,
+    }));
+  } catch (error) {
+    throw error;
+  }
+}
 
 // Only functions exported here can be used outside this file (once imported)
 module.exports = {

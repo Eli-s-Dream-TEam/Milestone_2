@@ -1,8 +1,8 @@
 // Imports
 require("dotenv").config(); // This is for the .env (enviornment variables) file, it fetches it basically
-const mongoose = require("./mongoose")
+const mongoose = require("./mongoose");
 const express = require("express"); // Get the express library
-
+const cors = require("cors");
 
 // Routers
 const model = require("./controller/model/model"); // Get all the '/api/model' routes
@@ -11,6 +11,7 @@ const anomaly = require("./controller/anomaly/anomaly"); // Get all the '/api/an
 
 // Initialize
 const app = express(); // Creates the server object
+app.use(cors());
 
 // CONSTS
 const PORT = process.env.PORT || 3000; // "Get the port from .env file, or default to 3000"
@@ -23,10 +24,7 @@ app.use("/api/model", model);
 app.use("/api/models", models);
 app.use("/api/anomaly", anomaly);
 
-
-
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });
-

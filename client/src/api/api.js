@@ -32,3 +32,16 @@ export const getModel = async (id) => {
 
   return response.json();
 };
+
+/**
+ * @returns {Object}
+ */
+export const getAllModels = async () => {
+  const config = {
+    method: "GET",
+  };
+
+  const response = await fetch(MODELS_URI, config);
+
+  return response.json();
+};

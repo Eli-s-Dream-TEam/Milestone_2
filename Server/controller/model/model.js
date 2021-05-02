@@ -12,10 +12,6 @@ router.post("/", async (request, response) => {
   const body = request.body;
   const query = request.query;
 
-  if (query.model_id) {
-    // return status for that id
-  }
-
   // Invalid request check
   if (!query.model_type || !body.train_data) {
     response.status(400).json({ message: "Bad request" });
@@ -85,13 +81,14 @@ router.delete("/", async (request, response) => {
   }
 
   // Delete model
-  model = await deleteModel(query.model_id);
+  model = deleteModel(query.model_id);
+
   if (!model) {
     response
       .status(400)
       .json({ message: "Not a valid model id, please try again" });
   } else {
-    response.status(200).json({ message: "Model deleted" });
+    response.status(200).json(model);
   }
 });
 

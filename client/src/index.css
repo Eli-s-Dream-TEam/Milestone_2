@@ -18,14 +18,37 @@ code {
 
 :root {
   --primary: #4188ff;
+  --primary-hover: #2c77f8;
   --primary-soft: #649eff;
   --secondary: #ffb841;
   --secondary-soft: #f1b959;
   --header: #ffffff;
   --border-radius: 40px;
   --text: #dadada;
+  --text-dim: #909090;
   --shadow: -8px -9px 40px 10px rgba(85, 93, 140, 0.86),
     21px 10px 44px -7px rgba(0, 0, 0, 0.88);
   --shadow-small: -5px 1px 15px 1px rgba(85, 93, 140, 0.86),
     15px 15px 25px -10px rgba(0, 0, 0, 0.88);
+}
+
+.btn {
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: medium;
+  font-size: 1rem;
+  cursor: pointer;
+  -webkit-box-shadow: 5px 2px 32px -5px rgba(0, 0, 0, 0.88);
+  box-shadow: 5px 2px 32px -5px rgba(0, 0, 0, 0.88);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  transition: background-color 200ms ease-out;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
 }

@@ -1,0 +1,59 @@
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fileDrop {
+  width: 100%;
+  height: 50%;
+}
+
+.uploader {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed var(--text-dim);
+  align-items: center;
+  color: var(--text-dim);
+  transition: all 300ms ease-out;
+}
+
+.active {
+  animation-name: breath;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.5, 0.5, 0.67, 0.6);
+}
+
+@keyframes breath {
+  0% {
+    color: var(--text-dim);
+    border: 1px dashed var(--text-dim);
+  }
+
+  50% {
+    color: var(--text);
+    border: 1px dashed var(--text);
+  }
+
+  100% {
+    color: var(--text-dim);
+    border: 1px dashed var(--text-dim);
+  }
+}
+
+.dragOver {
+  color: var(--secondary);
+  border: 1px dashed var(--secondary);
+}
+
+.uploadIcon {
+  width: 4rem;
+  height: 4rem;
+}

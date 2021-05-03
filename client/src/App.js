@@ -6,18 +6,18 @@ import { getAllModels } from "./api/api";
 // Page Layout
 import Header from "./components/Header/Header";
 import Graph from "./components/Graph/Graph";
-import ModelList from "./components/ModelList/ModelList";
+import FileHandler from "./components/FileHandler/FileHandler";
 
 function App() {
-  const [anomalies, setAnomalies] = useState([]);
+  const [models, setModels] = useState([]);
 
   /**
-   * @description Updates setAnomalies with data from the server
+   * @description Updates `models` with data from the server
    */
-  async function updateAnomalies() {
+  async function updateModels() {
     try {
       const data = await getAllModels();
-      setAnomalies(data);
+      setModels(data);
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +27,7 @@ function App() {
    * This method fires up only when the app is loaded initially
    */
   useEffect(() => {
-    updateAnomalies();
+    updateModels();
   }, []);
 
   return (
@@ -37,13 +37,13 @@ function App() {
           <Header />
           <div className="grid">
             <div>
-              <Graph anomalies={anomalies} />
+              <Graph models={models} />
             </div>
             <div>2</div>
+            <div>3</div>
             <div>
-              <ModelList anomalies={anomalies} />
+              <FileHandler />
             </div>
-            <div>4</div>
           </div>
         </div>
       </div>

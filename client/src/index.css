@@ -20,7 +20,8 @@ code {
   --primary: #4188ff;
   --primary-hover: #2c77f8;
   --primary-soft: #649eff;
-  --secondary: #ffb841;
+  --secondary: #eba42a;
+  --secondary-hover: rgb(211, 144, 30);
   --secondary-soft: #f1b959;
   --header: #ffffff;
   --border-radius: 40px;
@@ -36,7 +37,7 @@ code {
   border: none;
   padding: 1rem 2rem;
   border-radius: 10px;
-  font-weight: medium;
+  font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
   -webkit-box-shadow: 5px 2px 32px -5px rgba(0, 0, 0, 0.88);
@@ -51,4 +52,14 @@ code {
 
 .btn-primary:hover {
   background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  transition: background-color 200ms ease-out;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-hover);
 }

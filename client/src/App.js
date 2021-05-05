@@ -1,12 +1,14 @@
 // Imports
 import "./App.css";
 import { useEffect, useState } from "react";
+import { getModel } from "./api/api";
 import { getAllModels } from "./api/api";
+import { deleteModel } from "./api/api";
 
 // Page Layout
 import Header from "./components/Header/Header";
 import Graph from "./components/Graph/Graph";
-import FileHandler from "./components/FileHandler/FileHandler";
+import ModelList from "./components/ModelList/ModelList";
 
 function App() {
   const [models, setModels] = useState([]);
@@ -30,6 +32,17 @@ function App() {
     updateModels();
   }, []);
 
+
+  // Delete Model 
+  const delete_Model = (id) => {
+    deleteModel(id);
+    setModels(models.filter((model) => model.model_id !==id))
+  }
+
+  const get_model = (id) => {
+
+  }
+
   return (
     <div className="App">
       <div className="dashboard">
@@ -39,10 +52,16 @@ function App() {
             <div>
               <Graph models={models} />
             </div>
-            <div>2</div>
+            <div>
+              {ModelList.length > 0 ? <ModelList
+               models={models}
+               onDelete={delete_Model}
+               onChoose={get_model}
+                /> : 'No Models to Show'}
+            </div>
             <div>3</div>
             <div>
-              <FileHandler />
+              4
             </div>
           </div>
         </div>

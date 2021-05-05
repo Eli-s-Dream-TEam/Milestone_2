@@ -81,7 +81,7 @@ router.delete("/", async (request, response) => {
   }
 
   // Delete model
-  model = deleteModel(query.model_id);
+  model = await deleteModel(query.model_id);
 
   if (!model) {
     response

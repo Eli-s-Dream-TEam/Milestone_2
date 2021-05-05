@@ -1,12 +1,12 @@
-export default function Graph({ anomalies }) {
+export default function Graph({ models }) {
   return (
     <>
       <h1>This is from graph</h1>
-      <ul>
-        {anomalies.map((anomaly, index) => (
-          <li key={`anomaly-${index}`}>graph - {anomaly.model_id}</li>
+     
+        {models.map((models, index) => (
+          <li key={`models-${index}`}>graph - {models.model_id}</li>
         ))}
-      </ul>
+      
     </>
   );
 }

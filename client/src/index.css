@@ -29,3 +29,22 @@ code {
   --shadow-small: -5px 1px 15px 1px rgba(85, 93, 140, 0.86),
     15px 15px 25px -10px rgba(0, 0, 0, 0.88);
 }
+
+.model {
+  background: #f4f4f4;
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.models {
+  margin: 20px;
+}
+
+
+.model h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+

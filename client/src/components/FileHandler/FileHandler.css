@@ -61,6 +61,7 @@
 .showcase-container {
   border: 2px solid var(--text-dim);
   border-bottom-right-radius: 10px;
+  min-width: 100%;
   padding: 2rem 0 2rem 0;
   margin-bottom: 1rem;
   display: flex;
@@ -107,8 +108,7 @@
 .btn-container {
   display: flex;
   flex-direction: row;
-  justify-content: between;
-  gap: 10px;
+  justify-content: space-between;
 }
 
 .select-container {

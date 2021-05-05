@@ -13,7 +13,15 @@ import FileHandler from "./components/FileHandler/FileHandler";
 
 function App() {
   const [models, setModels] = useState([]);
-  const [anomalies, setAnomalies] = useState([]);
+  // just for testing
+  const [anomalies, setAnomalies] = useState(
+    {"anomalies": {
+      "speed" : [],
+      "thorttle" : [[2,10]],
+      "gps" : [[2,50],[100,300]]
+      },
+      "reason" : "why"   
+    });
   const [model, setModel] = useState()
 
   /**

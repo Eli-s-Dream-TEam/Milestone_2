@@ -4,4 +4,3 @@
 2. npm install
 3. npm install @material-ui/core
 4. npm run start
-5. check

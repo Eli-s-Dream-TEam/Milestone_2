@@ -40,9 +40,9 @@ function App() {
               <Graph models={models} />
             </div>
             <div>2</div>
-            <div>3</div>
+            <div></div>
             <div>
-              <FileHandler />
+              <FileHandler updateModels={updateModels} />
             </div>
           </div>
         </div>

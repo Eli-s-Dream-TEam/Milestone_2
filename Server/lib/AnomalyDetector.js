@@ -40,11 +40,10 @@ function learn(train_data, type, callback) {
         var ff2 = train_data[property];
       }
     }
-    if (type == "regrssion") {
+    if (type == "regression") {
       //assign to correlated
       var correlated = {};
       if (max > 0.9) {
-        // if hybrid so 0.5
         correlated.feature1 = f1;
         correlated.feature2 = f2;
         correlated.corrlation = max;
@@ -57,7 +56,7 @@ function learn(train_data, type, callback) {
             mmax = d;
           }
         }
-        correlated.threshold = mmax;
+        correlated.threshold = mmax * 2.1;
         allCorrelated.push(correlated);
       }
     } else if (type == "hybrid") {
@@ -193,11 +192,13 @@ function merging(span) {
       } else clone.push(span[i]);
     } else clone.push(span[i]);
   }
-  if (
-    span[span.length - 1][0] - 1 >
-    span[span.length - 2][span[span.length - 2].length - 1]
-  )
-    clone.push(span[span.length - 1]);
+  if (span.length > 1) {
+    if (
+      span[span.length - 1][0] - 1 >
+      span[span.length - 2][span[span.length - 2].length - 1]
+    )
+      clone.push(span[span.length - 1]);
+  }
   clone.sort();
   return clone;
 }
@@ -208,9 +209,9 @@ function data_to_anomaly(anomal, anomKeys) {
   var firstTime = time;
   var prevTime = time;
   var lastTime = 0;
-  var index = anomal[0].description.indexOf("-");
-  var firAno = anomal[0].description.substring(0, index - 1);
-  var secAno = anomal[0].description.substring(index + 2);
+  var index = anomal[0].description.indexOf(" - ");
+  var firAno = anomal[0].description.substring(0, index);
+  var secAno = anomal[0].description.substring(index + 3);
   for (var i = 1; i < anomal.length; i++) {
     time = anomal[i].timeStep;
     if (time - prevTime == 1) {
@@ -251,9 +252,9 @@ function data_to_anomaly(anomal, anomKeys) {
         anomaly[secAno] = second;
       }
       // prepare for next iterate
-      index = anomal[i].description.indexOf("-");
-      firAno = anomal[i].description.substring(0, index - 1);
-      secAno = anomal[i].description.substring(index + 2);
+      index = anomal[i].description.indexOf(" - ");
+      firAno = anomal[i].description.substring(0, index);
+      secAno = anomal[i].description.substring(index + 3);
       firstTime = time;
       prevTime = time;
     }
@@ -269,9 +270,9 @@ function data_to_anomaly(anomal, anomKeys) {
 
   // cut the description into two strings
   var num = anomal.length - 1;
-  index = anomal[num].description.indexOf("-");
-  firAno = anomal[num].description.substring(0, index - 1);
-  secAno = anomal[num].description.substring(index + 2);
+  index = anomal[num].description.indexOf(" - ");
+  firAno = anomal[num].description.substring(0, index);
+  secAno = anomal[num].description.substring(index + 3);
   for (var property in anomaly) {
     // if there is already a key in anomaly insert a new pair
     if (property == firAno) {
@@ -299,9 +300,13 @@ function data_to_anomaly(anomal, anomKeys) {
 
   // sort and merge every Span
   for (var property in anomaly) {
-    anomaly[property].sort();
     var myspan = anomaly[property];
     var clo = merging(myspan);
+    anomaly[property].sort(function (a, b) {
+      if (a[0] > b[0]) return 1;
+      if (a[0] < b[0]) return -1;
+      return 0;
+    });
     anomaly[property] = clo;
   }
   // add empty array for non anomaly features

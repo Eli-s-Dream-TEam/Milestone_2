@@ -1,11 +1,21 @@
-import "./FileHandler.css";
-import { FileDrop } from "react-file-drop";
+// Imports
 import { useRef, useState } from "react";
 
+// Utils & API
+import { addModel } from "../../api/api";
+import parse from "../../utils/csvParser";
+
+// UI
+import "./FileHandler.css";
+import { FileDrop } from "react-file-drop";
+import { Facebook } from "react-spinners-css";
+
+// Consts
 const TYPES = ["hybrid", "regression"];
 
-export default function FileHandler(props) {
+export default function FileHandler({ updateModels }) {
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [type, setType] = useState(TYPES[0]);
   const uploaderRef = useRef(null);
 
@@ -46,14 +56,16 @@ export default function FileHandler(props) {
     setFile(files[0]);
   };
 
-  const handleTrainModel = () => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      console.table(reader.result);
-    };
-
-    reader.readAsBinaryString(file);
+  const handleTrainModel = async () => {
+    setLoading(true);
+    parse(file)
+      .then(async (fileData) => {
+        const data = { train_data: fileData };
+        const response = await addModel(data, type);
+        updateModels();
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -86,7 +98,7 @@ export default function FileHandler(props) {
           </label>
         </FileDrop>
         {file && <hr style={{ width: "100%" }} />}
-        <div>
+        <div style={{ width: "100%" }}>
           {file && (
             <div className="showcase-container">
               <svg
@@ -123,7 +135,8 @@ export default function FileHandler(props) {
               </div>
             </div>
           )}
-          {file && (
+          {loading && <Facebook color="#4188ff" />}
+          {file && !loading && (
             <div>
               <div className="select-container">
                 <label htmlFor="type">Model Type:</label>

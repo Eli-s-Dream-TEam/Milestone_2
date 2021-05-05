@@ -3,8 +3,8 @@ export default function Graph({ models }) {
     <>
       <h1>This is from graph</h1>
       <ul>
-        {models.map((model, index) => (
-          <li key={`model-${index}`}>graph - {model.model_id}</li>
+        {models.map((models, index) => (
+          <li key={`models-${index}`}>graph - {models.model_id}</li>
         ))}
       </ul>
     </>

@@ -3,13 +3,16 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { getAllModels } from "./api/api";
 
+
 // Page Layout
 import Header from "./components/Header/Header";
 import Graph from "./components/Graph/Graph";
+import ModelList from "./components/ModelList/ModelList";
 import FileHandler from "./components/FileHandler/FileHandler";
 
 function App() {
   const [models, setModels] = useState([]);
+  const [model, setModel] = useState()
 
   /**
    * @description Updates `models` with data from the server
@@ -30,6 +33,7 @@ function App() {
     updateModels();
   }, []);
 
+
   return (
     <div className="App">
       <div className="dashboard">
@@ -39,10 +43,21 @@ function App() {
             <div>
               <Graph models={models} />
             </div>
-            <div>2</div>
-            <div></div>
             <div>
-              <FileHandler updateModels={updateModels} />
+              {ModelList.length > 0 ? <ModelList
+               models={models}
+               setModel={setModel}
+               updateModels={updateModels}              
+              
+                /> : 'No Models to Show'}
+            </div>
+            <div>3</div>
+            <div>
+              <FileHandler
+              updateModels={updateModels}
+            
+              />
+                      
             </div>
           </div>
         </div>

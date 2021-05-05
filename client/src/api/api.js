@@ -33,6 +33,16 @@ export const getModel = async (id) => {
   return response.json();
 };
 
+export const deleteModel = async (id) => {
+  const config = {
+    method: "DELETE"
+  };
+  
+  const response = await fetch(MODEL_URI + `?model_id=${id}`, config);
+
+  return response.json();
+}
+
 /**
  * @returns {Object}
  */

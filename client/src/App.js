@@ -11,26 +11,26 @@ import ModelList from "./components/ModelList/ModelList";
 //import SearchBar from "./components/ModelList/SearchBar"
 
 function App() {
-  const [anomalies, setAnomalies] = useState([]);
   const [models, setModels] = useState([]);
 
-  
+  /**
+   * @description Updates `models` with data from the server
+   */
+  async function updateModels() {
+    try {
+      const data = await getAllModels();
+      setModels(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   /**
    * This method fires up only when the app is loaded initially
    */
   useEffect(() => {
-    getModels();
+    updateModels();
   }, []);
-
-
-  const getModels = async () => {
-    try {
-    const res = await getAllModels();
-    setModels(res);
-    } catch(e) {
-      console.log(e);
-    }
-  }
 
 
   return (
@@ -40,10 +40,9 @@ function App() {
           <Header />
           <div className="grid">
             <div>
-              <Graph anomalies={anomalies} />
+              <Graph models={anomalies} />
             </div>
             <div>
-
               <ModelList models={models} />
             </div>
             <div>

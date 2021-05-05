@@ -8,10 +8,12 @@ import { getAllModels } from "./api/api";
 import Header from "./components/Header/Header";
 import Graph from "./components/Graph/Graph";
 import ModelList from "./components/ModelList/ModelList";
+import Notification from "./components/Notification/Notification";
 import FileHandler from "./components/FileHandler/FileHandler";
 
 function App() {
   const [models, setModels] = useState([]);
+  const [anomalies, setAnomalies] = useState([]);
   const [model, setModel] = useState()
 
   /**
@@ -51,7 +53,9 @@ function App() {
               
                 /> : 'No Models to Show'}
             </div>
-            <div>3</div>
+            <div>
+              < Notification anomalies={anomalies} />
+              </div>
             <div>
               <FileHandler
               updateModels={updateModels}

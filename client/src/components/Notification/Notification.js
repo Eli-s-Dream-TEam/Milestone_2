@@ -10,11 +10,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'featureName', label: 'Name', minWidth: 170 },
+  { id: 'featureName', label: 'Name', minWidth: 100 },
   {
     id: 'span',
     label: 'Spans',
-    minWidth: 170,
+    minWidth: 100,
     align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
@@ -33,13 +33,15 @@ function specialString (arr){
         if(arr[i] === '[')
             str = str.concat('[');
         else if(arr[i] === ']')
-            str = str.concat(']');
+            str = str.concat('],');
         else if(arr[i] === ',')
             str = str.concat(',');
         else {
             str = str + arr[i];
         }
-        str = str.concat("]");
+        if(i<arr.length-1)
+            str = str.concat("],");
+        else str = str.concat("]");
     }
     str = str.concat("]");
     return str;
@@ -50,7 +52,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    maxHeight: 190,
   },
 });
 export default function Notification({ anomalies }) {
@@ -62,12 +64,12 @@ export default function Notification({ anomalies }) {
         var reason = anomalies["reason"];
         rows.push({featureName, span, reason});
     }
-    
+
     var color = "#6457a1";
     var ind=1;
     const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(7);
+  const [rowsPerPage, setRowsPerPage] = React.useState(3);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -117,7 +119,7 @@ export default function Notification({ anomalies }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[7, 10, 25, 100]}
+        rowsPerPageOptions={[3, 7, 10, 25, 100]}
         component="div"
         style={{ background: color}}
         count={rows.length}

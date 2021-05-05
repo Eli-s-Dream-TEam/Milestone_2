@@ -321,4 +321,5 @@ function data_to_anomaly(anomal, anomKeys) {
 module.exports = {
   learn,
   detect,
+  data_to_anomaly
 };

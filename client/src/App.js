@@ -1,14 +1,12 @@
 // Imports
 import "./App.css";
-import { isValidElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getAllModels } from "./api/api";
-import JSONDATA from "./MOCK_DATA.json"
 
 // Page Layout
 import Header from "./components/Header/Header";
 import Graph from "./components/Graph/Graph";
-import ModelList from "./components/ModelList/ModelList";
-//import SearchBar from "./components/ModelList/SearchBar"
+import FileHandler from "./components/FileHandler/FileHandler";
 
 function App() {
   const [models, setModels] = useState([]);
@@ -32,7 +30,6 @@ function App() {
     updateModels();
   }, []);
 
-
   return (
     <div className="App">
       <div className="dashboard">
@@ -40,15 +37,13 @@ function App() {
           <Header />
           <div className="grid">
             <div>
-              <Graph models={anomalies} />
+              <Graph models={models} />
             </div>
+            <div>2</div>
+            <div>3</div>
             <div>
-              <ModelList models={models} />
+              <FileHandler />
             </div>
-            <div>
-
-            </div>
-            <div>4</div>
           </div>
         </div>
       </div>

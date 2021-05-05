@@ -18,33 +18,48 @@ code {
 
 :root {
   --primary: #4188ff;
+  --primary-hover: #2c77f8;
   --primary-soft: #649eff;
-  --secondary: #ffb841;
+  --secondary: #eba42a;
+  --secondary-hover: rgb(211, 144, 30);
   --secondary-soft: #f1b959;
   --header: #ffffff;
   --border-radius: 40px;
   --text: #dadada;
+  --text-dim: #909090;
   --shadow: -8px -9px 40px 10px rgba(85, 93, 140, 0.86),
     21px 10px 44px -7px rgba(0, 0, 0, 0.88);
   --shadow-small: -5px 1px 15px 1px rgba(85, 93, 140, 0.86),
     15px 15px 25px -10px rgba(0, 0, 0, 0.88);
 }
 
-.model {
-  background: #f4f4f4;
-  margin: 5px;
-  padding: 10px 20px;
+.btn {
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
+  -webkit-box-shadow: 5px 2px 32px -5px rgba(0, 0, 0, 0.88);
+  box-shadow: 5px 2px 32px -5px rgba(0, 0, 0, 0.88);
 }
 
-.models {
-  margin: 20px;
+.btn-primary {
+  background-color: var(--primary);
+  transition: background-color 200ms ease-out;
+  color: white;
 }
 
-
-.model h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.btn-primary:hover {
+  background-color: var(--primary-hover);
 }
 
+.btn-secondary {
+  background-color: var(--secondary);
+  transition: background-color 200ms ease-out;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-hover);
+}

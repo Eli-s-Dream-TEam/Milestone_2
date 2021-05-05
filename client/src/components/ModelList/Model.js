@@ -1,7 +1,15 @@
 import { FaTimes } from 'react-icons/fa'
+import { deleteModel } from "../../api/api";
 
-export default function Model ({ model, onDelete }) {
+
+
+export default function Model ({ model, setModel, updateModels }) {
   
+  const delete_Model = (id) => {
+    deleteModel(model.model_id);
+    updateModels();
+  }
+
     return ( 
       <div className='model'> 
         <h5>
@@ -10,14 +18,14 @@ export default function Model ({ model, onDelete }) {
             <FaTimes
              style={{color:'red', cursor:
              'pointer'}}
-             onClick={() => onDelete(model.model_id)}
+             onClick={delete_Model}
              />
               
         </h5>
         <p>{model.upload_time}</p>
         <p>{model.status}</p>
-        
-      </div>
+        onClick={() => setModel(model)}
+      </div> 
     )
 }
 

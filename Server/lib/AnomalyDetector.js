@@ -40,11 +40,10 @@ function learn(train_data, type, callback) {
         var ff2 = train_data[property];
       }
     }
-    if (type == "regrssion") {
+    if (type == "regression") {
       //assign to correlated
       var correlated = {};
       if (max > 0.9) {
-        // if hybrid so 0.5
         correlated.feature1 = f1;
         correlated.feature2 = f2;
         correlated.corrlation = max;
@@ -57,7 +56,7 @@ function learn(train_data, type, callback) {
             mmax = d;
           }
         }
-        correlated.threshold = mmax;
+        correlated.threshold = mmax * 2.1;
         allCorrelated.push(correlated);
       }
     } else if (type == "hybrid") {
@@ -118,7 +117,205 @@ function detect(corr, anomaly_data, type) {
       }
     }
   }
-  return anomaly;
+  return data_to_anomaly(anomaly, Object.keys(anomaly_data));
+}
+function merging(span) {
+  var clone = [];
+  for (var i = 0; i < span.length - 1; i++) {
+    // case [start] vs [start]
+    if (span[i].length == 1 && span[i + 1].length == 1) {
+      // case [x] vs [x]
+      if (span[i][0] == span[i + 1][0]) {
+        clone.push(span[i]);
+        i++;
+      } else clone.push(span[i]);
+    }
+    // case [start] vs [start,end]
+    else if (span[i].length == 1 && span[i + 1].length == 2) {
+      // case [x] vs [x,y]
+      if (span[i][0] == span[i + 1][0]) {
+        var b = true; // do nothing
+      }
+      // case [x-1] vs [x,y]
+      else if (span[i][0] + 1 == span[i + 1][0]) {
+        span[i + 1][0]--;
+      } else clone.push(span[i]);
+    }
+    // case [start,end] vs [start]
+    else if (span[i].length == 2 && span[i + 1].length == 1) {
+      // case [x,y] vs [y]
+      if (span[i][1] == span[i + 1][0]) {
+        clone.push(span[i]);
+        i++;
+      }
+      // case [x,y] vs [y+1]
+      else if (span[i][1] + 1 == span[i + 1][0]) {
+        span[i][1]++;
+        clone.push(span[i]);
+        i++;
+      }
+      // case [x,y] vs [y-1]
+      else if (span[i][1] - 1 == span[i + 1][0]) {
+        clone.push(span[i]);
+        i++;
+      } else clone.push(span[i]);
+    }
+    // case [start,end] vs [start,end]
+    else if (span[i].length == 2 && span[i + 1].length == 2) {
+      // case [x,y] vs [x,z]
+      if (span[i][0] == span[i + 1][0]) {
+        var sec = Math.max(span[i][1], span[i + 1][1]);
+        span[i + 1][1] = sec;
+      }
+      // case [x,y] vs [y,z] or [x,y] vs [y+1,z]
+      else if (
+        span[i][1] == span[i + 1][1] ||
+        span[i][1] + 1 == span[i + 1][1]
+      ) {
+        span[i][1] = span[i + 1][1];
+        clone.push(span[i]);
+        i++;
+      }
+      // case [x,y] vs [a,b]: x<a
+      else if (span[i][0] < span[i + 1][0]) {
+        //case b<=y
+        if (span[i][1] >= span[i + 1][1]) {
+          clone.push(span[i]);
+          i++;
+        }
+        // case y>b
+        else if (span[i][1] > span[i + 1][1]) {
+          span[i][1] = span[i + 1][1];
+          clone.push(span[i]);
+          i++;
+        } else clone.push(span[i]);
+      } else clone.push(span[i]);
+    } else clone.push(span[i]);
+  }
+  if (span.length > 1) {
+    if (
+      span[span.length - 1][0] - 1 >
+      span[span.length - 2][span[span.length - 2].length - 1]
+    )
+      clone.push(span[span.length - 1]);
+  }
+  clone.sort();
+  return clone;
+}
+function data_to_anomaly(anomal, anomKeys) {
+  var completeAnomaly = {};
+  var anomaly = {};
+  var time = anomal[0].timeStep;
+  var firstTime = time;
+  var prevTime = time;
+  var lastTime = 0;
+  var index = anomal[0].description.indexOf(" - ");
+  var firAno = anomal[0].description.substring(0, index);
+  var secAno = anomal[0].description.substring(index + 3);
+  for (var i = 1; i < anomal.length; i++) {
+    time = anomal[i].timeStep;
+    if (time - prevTime == 1) {
+      prevTime = time;
+    } else {
+      lastTime = prevTime;
+      var indexPair = [];
+      // make [start, end] if both equal then only [start]
+      indexPair.push(firstTime);
+      if (lastTime != firstTime) indexPair.push(lastTime);
+      // insert to anomaly
+      var firstFlag = 0;
+      var secondFlag = 0;
+      // cut the description into two strings
+      for (var property in anomaly) {
+        // if there is already a key in anomaly insert a new pair
+        if (property == firAno) {
+          var temp = anomaly[property];
+          temp.push(indexPair);
+          anomaly[property] = temp;
+          firstFlag = 1;
+        } else if (property == secAno) {
+          const pairClone = JSON.parse(JSON.stringify(indexPair));
+          var temp = anomaly[property];
+          temp.push(pairClone);
+          anomaly[property] = temp;
+          secondFlag = 1;
+        }
+      }
+      // if it didnt find the key: make a new one
+      if (firstFlag == 0) {
+        var first = [indexPair];
+        anomaly[firAno] = first;
+      }
+      if (secondFlag == 0) {
+        const pairClone = JSON.parse(JSON.stringify(indexPair));
+        var second = [pairClone];
+        anomaly[secAno] = second;
+      }
+      // prepare for next iterate
+      index = anomal[i].description.indexOf(" - ");
+      firAno = anomal[i].description.substring(0, index);
+      secAno = anomal[i].description.substring(index + 3);
+      firstTime = time;
+      prevTime = time;
+    }
+  }
+  lastTime = prevTime;
+  var indexPair = [];
+  // make [start, end] if both equal then only [start]
+  indexPair.push(firstTime);
+  if (lastTime != firstTime) indexPair.push(lastTime);
+  // insert to anomaly
+  firstFlag = 0;
+  secondFlag = 0;
+
+  // cut the description into two strings
+  var num = anomal.length - 1;
+  index = anomal[num].description.indexOf(" - ");
+  firAno = anomal[num].description.substring(0, index);
+  secAno = anomal[num].description.substring(index + 3);
+  for (var property in anomaly) {
+    // if there is already a key in anomaly insert a new pair
+    if (property == firAno) {
+      var temp = anomaly[property];
+      temp.push(indexPair);
+      anomaly[property] = temp;
+      firstFlag = 1;
+    } else if (property == secAno) {
+      const pairClone = JSON.parse(JSON.stringify(indexPair));
+      var temp = anomaly[property];
+      temp.push(pairClone);
+      anomaly[property] = temp;
+      secondFlag = 1;
+    }
+  }
+  // if it didnt find the key: make a new one
+  if (firstFlag == 0) {
+    var first = [indexPair];
+    anomaly[firAno] = first;
+  }
+  if (secondFlag == 0) {
+    var second = [indexPair];
+    anomaly[secAno] = second;
+  }
+
+  // sort and merge every Span
+  for (var property in anomaly) {
+    var myspan = anomaly[property];
+    var clo = merging(myspan);
+    anomaly[property].sort(function (a, b) {
+      if (a[0] > b[0]) return 1;
+      if (a[0] < b[0]) return -1;
+      return 0;
+    });
+    anomaly[property] = clo;
+  }
+  // add empty array for non anomaly features
+  for (var i = 0; i < anomKeys.length; i++) {
+    if (!(anomKeys[i] in anomaly)) anomaly[anomKeys[i]] = [];
+  }
+  completeAnomaly.anomalies = anomaly;
+  completeAnomaly.reason = "beacuse we must write one";
+  return completeAnomaly;
 }
 
 module.exports = {

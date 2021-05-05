@@ -1,12 +1,13 @@
-export default function ModelList(props) {
+import Model from './Model'
+
+export default function ModelList({ models }) {
   return (
-    <>
-      <h1>This is from modelist</h1>
-      <ul>
-        {props.anomalies.map((anomaly, index) => (
-          <li key={`anomaly-${index}`}>list - {anomaly.model_id}</li>
-        ))}
-      </ul>
-    </>
+    <ul>
+      {models?.map((model) => (
+        <li model key={model.model_id} model={model} />
+      ))}   
+    </ul>
   );
 }
+
+

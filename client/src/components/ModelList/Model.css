@@ -1,9 +1,35 @@
 .model {
-    background: #f4f4f4;
     margin: 5px;
     padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
     cursor: pointer;
+    border-radius: 5px;
   }
+
+  .model:hover {
+    background: var(--primary-hover);
+  }
+
+  .model:active {
+    background: var(--primary-soft);
+  }
+
+  .model-list {
+    list-style: none;
+    padding: 1rem;
+    max-height: 100%;
+    position: relative;
+    overflow-y: auto;
+  }
+
+  .container {
+
+    max-height: 100% !important;
+    overflow-y: hidden;
+  }
+
+
   
   .models {
     margin: 20px;
@@ -14,4 +40,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .selected {
+    background: var(--primary);
   }

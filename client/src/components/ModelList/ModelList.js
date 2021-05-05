@@ -1,17 +1,23 @@
 import Model from './Model'
+import "./Model.css";
 
-export default function ModelList({ models, setModel, updateModels}) {
+export default function ModelList({ models, model, setModel, updateModels}) {
  // Delete Model 
 
 
-
   return (
-    <>      
-      {models?.map((model) => (
-        <Model key={model.model_id} model={model}
-        setModel={setModel}
-        updateModels={updateModels} />
-      ))}  
-    </>
+    <div className="container">
+        <ul className="model-list">      
+          {models?.map((thisModel) => (
+            <Model
+            key={thisModel.model_id}
+            model={thisModel}
+            selectedModel={model}
+            setModel={setModel}
+            updateModels={updateModels}
+            />
+          ))}  
+        </ul>
+      </div>
   );
 }

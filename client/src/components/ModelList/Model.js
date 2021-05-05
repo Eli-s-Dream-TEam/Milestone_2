@@ -1,31 +1,31 @@
 import { FaTimes } from 'react-icons/fa'
 import { deleteModel } from "../../api/api";
+import "./Model.css";
 
 
-
-export default function Model ({ model, setModel, updateModels }) {
+export default function Model ({ model, selectedModel, setModel, updateModels }) {
   
-  const delete_Model = (id) => {
+  const delete_Model = () => {
     deleteModel(model.model_id);
     updateModels();
   }
 
+  const isSelected = () => model?.model_id === selectedModel?.model_id;
+
     return ( 
-      <div className='model'> 
+      <li className={`model ${isSelected() ? "selected" : ""}`} onClick={() => setModel(model)}> 
         <h5>
+          {model.model_id}
           
-            {model.model_id}
-            <FaTimes
-             style={{color:'red', cursor:
-             'pointer'}}
-             onClick={delete_Model}
-             />
-              
         </h5>
         <p>{model.upload_time}</p>
         <p>{model.status}</p>
-        onClick={() => setModel(model)}
-      </div> 
+      <FaTimes
+          style={{color:'red', cursor:
+          'pointer'}}
+          onClick={delete_Model}
+          />
+      </li> 
     )
 }
 

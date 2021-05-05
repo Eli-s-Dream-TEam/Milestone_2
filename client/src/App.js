@@ -47,7 +47,8 @@ function App() {
               {ModelList.length > 0 ? <ModelList
                models={models}
                setModel={setModel}
-               updateModels={updateModels}              
+               updateModels={updateModels} 
+               model={model}          
               
                 /> : 'No Models to Show'}
             </div>

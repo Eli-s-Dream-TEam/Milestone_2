@@ -5,6 +5,7 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
+  overflow-x: hidden;
   justify-content: center;
 }
 
@@ -48,4 +49,5 @@
   border-radius: var(--border-radius);
   -webkit-box-shadow: var(--shadow-small);
   box-shadow: var(--shadow-small);
+  display: flex;
 }

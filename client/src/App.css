@@ -2,7 +2,7 @@
   background-color: #353a5a;
   text-align: center;
   min-width: 100vw;
-  min-height: 100vh;
+  min-height: 120vh;
   display: flex;
   align-items: center;
   overflow-x: hidden;
@@ -15,7 +15,7 @@
   justify-content: center;
   background-color: #42486e;
   width: 90%;
-  height: 90rem;
+  height: 100rem;
   border: 1px solid #acacac1e;
   border-bottom: none;
   border-right: none;
@@ -49,5 +49,5 @@
   border-radius: var(--border-radius);
   -webkit-box-shadow: var(--shadow-small);
   box-shadow: var(--shadow-small);
-  display: flex;
+  overflow-y: hidden;
 }

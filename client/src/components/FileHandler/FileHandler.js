@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 
 // Utils & API
-import { addModel } from "../../api/api";
+import { addModel, testModel } from "../../api/api";
 import parse from "../../utils/csvParser";
 
 // UI
@@ -13,7 +13,7 @@ import { Facebook } from "react-spinners-css";
 // Consts
 const TYPES = ["hybrid", "regression"];
 
-export default function FileHandler({ updateModels }) {
+export default function FileHandler({ updateModels, model, alert }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState(TYPES[0]);
@@ -61,10 +61,36 @@ export default function FileHandler({ updateModels }) {
     parse(file)
       .then(async (fileData) => {
         const data = { train_data: fileData };
-        const response = await addModel(data, type);
+        await addModel(data, type);
         updateModels();
+        alert("success", "Model added succesfully");
       })
-      .catch((error) => console.error(error))
+      .catch((error) => {
+        alert("error", "Can not add a model right now");
+        console.error(error);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handleTestModel = async () => {
+    // Make sure a model is selected
+    if (!model || Object.keys(model).length === 0) {
+      alert("error", "Please select an existing model first");
+      return;
+    }
+
+    setLoading(true);
+    parse(file)
+      .then(async (fileData) => {
+        const data = { predict_data: fileData };
+        const response = await testModel(data, model.model_id);
+        console.log(response);
+        alert("success", "Anomalies detected succesfully");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("error", "Can not detect anomalies for that model right now");
+      })
       .finally(() => setLoading(false));
   };
 
@@ -154,10 +180,7 @@ export default function FileHandler({ updateModels }) {
                 <button className="btn btn-primary" onClick={handleTrainModel}>
                   Train
                 </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={handleTrainModel}
-                >
+                <button className="btn btn-secondary" onClick={handleTestModel}>
                   Test
                 </button>
               </div>

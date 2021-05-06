@@ -9,15 +9,22 @@ export default function parse(csvFile) {
     reader.onload = () => {
       const parsedCsv = reader.result.split("\n");
       const features = parsedCsv[0].split(",");
-      const rawData = parsedCsv.slice(1);
       let data = {};
-
-      features.forEach((feature, index) => {
-        let featureData = [];
-        rawData.forEach((row) => featureData.push(row.split(",")[index]));
-        data[feature] = featureData;
-      });
-
+      for(var i = 1; i < parsedCsv.length; i++) {
+        var mydata = parsedCsv[i].split(',');
+        for(var j = 0; j < mydata.length; j++) {
+          if (i == 1){
+            var lineData = [];
+            var flo = parseFloat(mydata[j].trim());
+            lineData.push(flo);
+            data[features[j].trim()] = lineData;
+          }
+          else {
+              var floa = parseFloat(mydata[j].trim());
+              data[features[j].trim()].push(floa);
+          }
+        }
+      }
       resolve(data);
     };
 

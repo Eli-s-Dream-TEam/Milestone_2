@@ -48,7 +48,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   container: {
-    maxHeight: 190,
+    maxHeight: 400,
   },
 });
 export default function AnomaliesTable({ anomalies }) {
@@ -65,7 +65,7 @@ export default function AnomaliesTable({ anomalies }) {
   var ind = 1;
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(3);
+  const [rowsPerPage, setRowsPerPage] = React.useState(7);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -129,7 +129,7 @@ export default function AnomaliesTable({ anomalies }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[3, 7, 10, 25, 100]}
+        rowsPerPageOptions={[7, 10, 25, 100]}
         component="div"
         style={{ background: color }}
         count={rows.length}

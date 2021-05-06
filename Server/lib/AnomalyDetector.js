@@ -205,6 +205,7 @@ function merging(span) {
 function data_to_anomaly(anomal, anomKeys) {
   var completeAnomaly = {};
   var anomaly = {};
+  if(anomal.length>0) {
   var time = anomal[0].timeStep;
   var firstTime = time;
   var prevTime = time;
@@ -309,6 +310,7 @@ function data_to_anomaly(anomal, anomKeys) {
     });
     anomaly[property] = clo;
   }
+}
   // add empty array for non anomaly features
   for (var i = 0; i < anomKeys.length; i++) {
     if (!(anomKeys[i] in anomaly)) anomaly[anomKeys[i]] = [];
@@ -321,5 +323,4 @@ function data_to_anomaly(anomal, anomKeys) {
 module.exports = {
   learn,
   detect,
-  data_to_anomaly,
 };

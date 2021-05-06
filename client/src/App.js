@@ -15,18 +15,7 @@ import AnomaliesTable from "./components/AnomaliesTable/AnomaliesTable";
 function App() {
   const [models, setModels] = useState([]);
   // just for testing
-  const [anomalies, setAnomalies] = useState({
-    anomalies: {
-      speed: [],
-      thorttle: [[2, 10]],
-      gps: [
-        [2, 50],
-        [100, 300],
-      ],
-      enclose: [[8, 30], [15], [100, 300], [400]],
-    },
-    reason: "why",
-  });
+  const [anomalies, setAnomalies] = useState([]);
   const [model, setModel] = useState({});
   const [notification, setNotification] = useState({
     open: false,

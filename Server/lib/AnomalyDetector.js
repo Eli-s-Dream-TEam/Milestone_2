@@ -56,24 +56,24 @@ function learn(train_data, type, callback) {
             mmax = d;
           }
         }
-        correlated.threshold = mmax * 2.1;
+        correlated.threshold = mmax * 1.1;
         allCorrelated.push(correlated);
       }
     } else if (type == "hybrid") {
-      var correlated = {};
+      var hyCorrelated = {};
       if (max > 0.5) {
-        correlated.feature1 = f1;
-        correlated.feature2 = f2;
-        correlated.corrlation = max;
+        hyCorrelated.feature1 = f1;
+        hyCorrelated.feature2 = f2;
+        hyCorrelated.corrlation = max;
         var point = [];
         for (var a = 0; a < numOfRow; a++) {
           point[a] = { x: ff1[a], y: ff2[a] };
         }
         var circle = enclosingCircle(point);
-        correlated.threshold = circle.r;
-        correlated.cx = circle.x;
-        correlated.cy = circle.y;
-        allCorrelated.push(correlated);
+        hyCorrelated.threshold = circle.r*1.1;
+        hyCorrelated.cx = circle.x;
+        hyCorrelated.cy = circle.y;
+        allCorrelated.push(hyCorrelated);
       }
     }
   }
@@ -93,7 +93,7 @@ function detect(corr, anomaly_data, type) {
     for (var i = 0; i < size; i++) {
       if (type == "regression") {
         var ab = Math.abs(
-          myy[i] - corr[j].line_reg.slope * myx[i] + corr[j].line_reg.intercept
+          myy[i] - ((corr[j].line_reg.slope * myx[i]) + corr[j].line_reg.intercept)
         );
         if (ab > corr[j].threshold) {
           var anomalyReport = {};
@@ -191,6 +191,9 @@ function merging(span) {
         } else clone.push(span[i]);
       } else clone.push(span[i]);
     } else clone.push(span[i]);
+  }
+  if(span.length == 1){
+    clone.push(span[0]);
   }
   if (span.length > 1) {
     if (
@@ -298,12 +301,17 @@ function data_to_anomaly(anomal, anomKeys) {
     var second = [indexPair];
     anomaly[secAno] = second;
   }
-
   // sort and merge every Span
   for (var property in anomaly) {
     var myspan = anomaly[property];
+    myspan.sort(function (a, b) {
+      if (a[0] > b[0]) return 1;
+      if (a[0] < b[0]) return -1;
+      return 0;
+    });
     var clo = merging(myspan);
-    anomaly[property].sort(function (a, b) {
+    //another sort for safety
+    clo.sort(function (a, b) {
       if (a[0] > b[0]) return 1;
       if (a[0] < b[0]) return -1;
       return 0;

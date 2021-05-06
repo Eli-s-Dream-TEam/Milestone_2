@@ -13,7 +13,12 @@ import { Facebook } from "react-spinners-css";
 // Consts
 const TYPES = ["hybrid", "regression"];
 
-export default function FileHandler({ updateModels, model, alert }) {
+export default function FileHandler({
+  updateModels,
+  model,
+  alert,
+  setAnomalies,
+}) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState(TYPES[0]);
@@ -84,7 +89,7 @@ export default function FileHandler({ updateModels, model, alert }) {
       .then(async (fileData) => {
         const data = { predict_data: fileData };
         const response = await testModel(data, model.model_id);
-        console.log(response);
+        setAnomalies(response);
         alert("success", "Anomalies detected succesfully");
       })
       .catch((error) => {

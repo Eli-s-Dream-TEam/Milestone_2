@@ -1,4 +1,5 @@
-import { FaTimes } from "react-icons/fa";
+import { FaAlignJustify, FaTimes } from "react-icons/fa";
+import Table from 'react-bootstrap/Table'
 import { deleteModel } from "../../api/api";
 import "./Model.css";
 
@@ -24,17 +25,37 @@ export default function Model({
   const isSelected = () => model?.model_id === selectedModel?.model_id;
 
   return (
+    
     <li
-      className={`model ${isSelected() ? "selected" : ""}`}
-      onClick={() => setModel(model)}
+    className={`model ${isSelected() ? "selected" : ""}`}
+    style={{justiftyContent:"center", alignItems:"center"}}
+    onClick={() => setModel(model)}
+    
     >
-      <h5>{model.model_id}</h5>
-      <p>{model.upload_time}</p>
-      <p>{model.status}</p>
-      <FaTimes
-        style={{ color: "red", cursor: "pointer" }}
-        onClick={delete_Model}
+      <Table striped bordered hover variant="dark" >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Upload Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{model.model_id}</td>
+            <td>{model.upload_time.substr(0,10)}</td>
+            <td>{model.status}</td>
+          </tr>
+        </tbody>            
+      </Table>
+      <FaTimes      
+      size='2rem'
+      style={{ color: "red", cursor: "pointer" }}
+      onClick={delete_Model}      
       />
     </li>
+           
+    
   );
 }
+

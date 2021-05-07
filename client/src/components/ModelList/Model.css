@@ -1,47 +1,54 @@
 .model {
-    margin: 5px;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    border-radius: 5px;
-  }
+  margin: 5px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
-  .model:hover {
-    background: var(--primary-hover);
-  }
+.model:hover {
+  background: var(--primary-hover);
+}
 
-  .model:active {
-    background: var(--primary-soft);
-  }
+.model:active {
+  background: var(--primary-soft);
+}
 
-  .model-list {
-    list-style: none;
-    padding: 1rem;
-    max-height: 100%;
-    position: relative;
-    overflow-y: auto;
-  }
+.model-list {
+  list-style: none;
+  padding: 1rem;
+  max-height: 100%;
+  position: relative;
+  overflow-y: auto;
+}
 
-  .container {
+.container {
 
-    max-height: 100% !important;
-    overflow-y: hidden;
-  }
+  max-height: 100% !important;
+  overflow-y: hidden;
+}
+
+.models {
+  margin: 20px;
+}
 
 
-  
-  .models {
-    margin: 20px;
-  }
-  
-  
-  .model h3 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.model h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .selected {
-    background: var(--primary);
-  }
+.selected {
+  background: var(--primary);
+}
+
+table th, tfoot td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4caf50;
+  color: white;
+}
+ 

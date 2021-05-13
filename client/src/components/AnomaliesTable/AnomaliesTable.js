@@ -51,7 +51,7 @@ const useStyles = makeStyles({
     maxHeight: 460,
   },
 });
-export default function AnomaliesTable({ anomalies }) {
+export default function AnomaliesTable({ anomalies, onRowClick }) {
   // assign to rows
   var rows = [];
   for (var key in anomalies["anomalies"]) {
@@ -110,6 +110,7 @@ export default function AnomaliesTable({ anomalies }) {
                         ? { background: "#2c77f8" }
                         : { background: "#649eff" }
                     }
+                    onClick={()=>onRowClick(row.featureName)}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];

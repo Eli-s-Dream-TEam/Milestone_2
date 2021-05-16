@@ -12,9 +12,11 @@ import ModelList from "./components/ModelList/ModelList";
 import FileHandler from "./components/FileHandler/FileHandler";
 import AnomaliesTable from "./components/AnomaliesTable/AnomaliesTable";
 
+//need to read this info from server initially.
+var flightDuration = 2175;
+
 function App() {
   const [models, setModels] = useState([]);
-
   const [feature, setFeatureGraph] = useState();
   // just for testing
   const [anomalies, setAnomalies] = useState([]);
@@ -77,7 +79,14 @@ function App() {
           <Header />
           <div className="grid">
             <div>
-              <Graph selectedFeature={feature} anomalies={anomalies} />
+              <div className="graphheader">
+                <h1>{feature}</h1>
+              </div>
+              <Graph
+                selectedFeature={feature}
+                anomalies={anomalies}
+                flightDuration={flightDuration}
+              />
             </div>
             <div>
               {ModelList.length > 0 ? (

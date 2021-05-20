@@ -82,3 +82,11 @@ code {
   background: var(--primary);
   border-radius: 10px;
 }
+
+.graphheader {
+  padding: 30;
+  text-align: center;
+  background: black;
+  color: white;
+  font-size: 50px;
+}

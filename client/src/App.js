@@ -5,7 +5,6 @@ import { getAllModels } from "./api/api";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 
-
 // Page Layout
 import Header from "./components/Header/Header";
 import Graph from "./components/Graph/Graph";
@@ -13,8 +12,12 @@ import ModelList from "./components/ModelList/ModelList";
 import FileHandler from "./components/FileHandler/FileHandler";
 import AnomaliesTable from "./components/AnomaliesTable/AnomaliesTable";
 
+//need to read this info from server initially.
+var flightDuration = 2175;
+
 function App() {
   const [models, setModels] = useState([]);
+  const [feature, setFeatureGraph] = useState();
   // just for testing
   const [anomalies, setAnomalies] = useState([]);
   const [model, setModel] = useState({});
@@ -56,6 +59,10 @@ function App() {
     updateModels();
   }, []);
 
+  const rowClicked = (featName) => {
+    setFeatureGraph(featName);
+  };
+
   return (
     <div className="App">
       <div className="dashboard">
@@ -72,7 +79,14 @@ function App() {
           <Header />
           <div className="grid">
             <div>
-              <Graph models={models} />
+              <div className="graphheader">
+                <h1>{feature}</h1>
+              </div>
+              <Graph
+                selectedFeature={feature}
+                anomalies={anomalies}
+                flightDuration={flightDuration}
+              />
             </div>
             <div>
               {ModelList.length > 0 ? (
@@ -87,7 +101,7 @@ function App() {
               )}
             </div>
             <div>
-              <AnomaliesTable anomalies={anomalies} />
+              <AnomaliesTable anomalies={anomalies} onRowClick={rowClicked} />
             </div>
             <div>
               <FileHandler

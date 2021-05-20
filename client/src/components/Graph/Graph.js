@@ -10,32 +10,32 @@ import {
 //0 - reg, 1 - anomaly.
 const COLORS = ["#282828", "#8899a6"];
 
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-  index,
-}) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+// const RADIAN = Math.PI / 180;
+// const renderCustomizedLabel = ({
+//   cx,
+//   cy,
+//   midAngle,
+//   innerRadius,
+//   outerRadius,
+//   percent,
+//   index,
+// }) => {
+//   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+//   const x = cx + radius * Math.cos(-midAngle * RADIAN);
+//   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="white"
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
+//   return (
+//     <text
+//       x={x}
+//       y={y}
+//       fill="white"
+//       textAnchor={x > cx ? "start" : "end"}
+//       dominantBaseline="central"
+//     >
+//       {`${(percent * 100).toFixed(0)}%`}
+//     </text>
+//   );
+// };
 
 function generateAnomaliesArray(featureAnomalies) {
   var anomaliesData = [];
@@ -112,30 +112,29 @@ export default function Graph({ selectedFeature, anomalies, flightDuration }) {
     flightDuration
   );
 
-  const tooltipStyle = {
-    backgroundColor: "white",
-    borderColor: "black",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRadius: "1%",
-    fontFamily: "helvetica, sans-serif",
-    fontSize: "16px",
-    padding: ".5%",
-  };
+  function CustomTooltip({ payload, label, active }) {
+    if (active) {
+      return (
+        <div>
+          <p>start : {payload[0]["payload"]["payload"]["start"]}</p>
+          <p>end : {payload[0]["payload"]["payload"]["end"]}</p>
+        </div>
+      );
+    }
 
-  const tooltipContent = (e) => {
-    return <div>{"PV: " + e.pv}</div>;
-  };
+    return null;
+  }
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
+        <Tooltip content={<CustomTooltip />} />
         <Pie
           data={completeGraphData}
           cx="50%"
           cy="50%"
           labelLine={false}
-          label={renderCustomizedLabel}
+          // label={renderCustomizedLabel}
           outerRadius={300}
           fill="#8884d8"
           dataKey="duration"
@@ -151,12 +150,3 @@ export default function Graph({ selectedFeature, anomalies, flightDuration }) {
     </ResponsiveContainer>
   );
 }
-
-// export default function Graph({ selectedFeature, anomalies }) {
-//   console.log(anomalies)
-//   console.log(selectedFeature)
-
-//   return (
-
-//   );
-// }

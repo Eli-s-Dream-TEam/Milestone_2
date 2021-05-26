@@ -2,9 +2,9 @@
   background-color: #353a5a;
   text-align: center;
   min-width: 100vw;
-  min-height: 120vh;
+  min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   overflow-x: hidden;
   justify-content: center;
 }
@@ -14,8 +14,9 @@
   align-items: center;
   justify-content: center;
   background-color: #42486e;
+  overflow-x: hidden;
   width: 90%;
-  height: 100rem;
+  height: 100%;
   border: 1px solid #acacac1e;
   border-bottom: none;
   border-right: none;
@@ -25,27 +26,37 @@
 }
 
 .content {
+  padding: 5px 5px;
   overflow: hidden;
   position: relative;
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
+}
+
+.graphheader {
+  padding: 0.5rem 0;
+  text-align: center;
+  color: white;
+  font-size: 50px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: 1.5fr 1fr;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 20px 60px;
   grid-template-areas:
     ". ."
     ". .";
   width: 100%;
   height: 100%;
-  padding: 0 2rem 10rem 2rem;
+  max-height: 100%;
+  padding: 1rem;
 }
 
 .grid > div {
   background-color: #3b4164;
+  max-height: 90vh;
   border-radius: var(--border-radius);
   -webkit-box-shadow: var(--shadow-small);
   box-shadow: var(--shadow-small);

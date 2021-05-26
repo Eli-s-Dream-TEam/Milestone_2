@@ -13,11 +13,11 @@ import FileHandler from "./components/FileHandler/FileHandler";
 import AnomaliesTable from "./components/AnomaliesTable/AnomaliesTable";
 
 //need to read this info from server initially.
-var flightDuration = 2175;
 
 function App() {
   const [models, setModels] = useState([]);
   const [feature, setFeatureGraph] = useState();
+  const [flightDuration, setFlightDuration] = useState(0);
   // just for testing
   const [anomalies, setAnomalies] = useState([]);
   const [model, setModel] = useState({});
@@ -63,6 +63,11 @@ function App() {
     setFeatureGraph(featName);
   };
 
+  const resetAnomaliesAndFeatures = () => {
+    setAnomalies([]);
+    setFeatureGraph();
+  };
+
   return (
     <div className="App">
       <div className="dashboard">
@@ -95,6 +100,7 @@ function App() {
                   setModel={setModel}
                   updateModels={updateModels}
                   model={model}
+                  resetAnomaliesAndFeatures={resetAnomaliesAndFeatures}
                 />
               ) : (
                 "No Models to Show"
@@ -107,6 +113,7 @@ function App() {
               <FileHandler
                 updateModels={updateModels}
                 model={model}
+                setFlightDuration={setFlightDuration}
                 alert={alert}
                 setAnomalies={setAnomalies}
               />

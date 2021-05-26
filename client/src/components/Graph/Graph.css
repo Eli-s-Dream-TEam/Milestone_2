@@ -1,0 +1,13 @@
+.tooltip-container {
+  background-color: black;
+  padding: 0.7rem 2rem;
+  text-align: center;
+}
+
+.tooltip-container p {
+  color: white;
+}
+
+.placeholder h2 {
+  color: var(--header);
+}

@@ -9,6 +9,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 
+import "./AnomaliesTable.css";
+
 const columns = [
   { id: "featureName", label: "Name", minWidth: 100 },
   {
@@ -46,6 +48,8 @@ function specialString(arr) {
 const useStyles = makeStyles({
   root: {
     width: "100%",
+    height: "100%",
+    background: "#2c77f8",
   },
   container: {
     maxHeight: 460,
@@ -61,7 +65,7 @@ export default function AnomaliesTable({ anomalies, onRowClick }) {
     rows.push({ featureName, span, reason });
   }
 
-  var color = "#6457a1";
+  var color = "#2c77f8";
   var ind = 1;
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -76,6 +80,14 @@ export default function AnomaliesTable({ anomalies, onRowClick }) {
     setPage(0);
   };
 
+  if (!anomalies || anomalies.length === 0) {
+    return (
+      <div className="placeholder">
+        <h2>Please test an existing model to view the anomalies list</h2>
+      </div>
+    );
+  }
+
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -86,8 +98,11 @@ export default function AnomaliesTable({ anomalies, onRowClick }) {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                  style={{ background: color }}
+                  style={{
+                    minWidth: column.minWidth,
+                    background: color,
+                    color: "#dadada",
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -107,10 +122,10 @@ export default function AnomaliesTable({ anomalies, onRowClick }) {
                     key={row.code}
                     style={
                       ind % 2
-                        ? { background: "#2c77f8" }
+                        ? { background: "#4188ff" }
                         : { background: "#649eff" }
                     }
-                    onClick={()=>onRowClick(row.featureName)}
+                    onClick={() => onRowClick(row.featureName)}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -132,7 +147,7 @@ export default function AnomaliesTable({ anomalies, onRowClick }) {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
-        style={{ background: color }}
+        style={{ background: color, color: "#dadada" }}
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}

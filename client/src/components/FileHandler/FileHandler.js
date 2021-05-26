@@ -18,6 +18,7 @@ export default function FileHandler({
   model,
   alert,
   setAnomalies,
+  setFlightDuration,
 }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -87,6 +88,10 @@ export default function FileHandler({
     setLoading(true);
     parse(file)
       .then(async (fileData) => {
+        // Set the flight duration
+        const firstKey = Object.keys(fileData)[0];
+        firstKey && setFlightDuration(fileData[firstKey].length);
+
         const data = { predict_data: fileData };
         const response = await testModel(data, model.model_id);
         setAnomalies(response);

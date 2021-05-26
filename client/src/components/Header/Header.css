@@ -1,11 +1,11 @@
 .header {
   display: flex;
   max-width: max-content;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .logo {
-  width: 3rem;
+  width: 2rem;
   height: auto;
   color: var(--primary);
   transform: rotate(0deg);
@@ -17,7 +17,7 @@
 }
 
 .header:hover > .logo {
-  transform: rotate(25deg);
+  transform: rotate(360deg);
   transition-duration: 200ms;
   transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 }

@@ -24,20 +24,20 @@ It will present the anomalies of a chosen flight paramater graphically in a tabl
 
 ```
 .Milestone_2
-├── client     					# UI of the web application (View part of the MVC architecture)
-|   ├── public					# contain the public files such as the index.html, the main page.
-|   ├── src						# UI implementation folder.
-|   |   ├── api					# HTTP requests implemantation files.	
-|   |   ├── components			# The different UI componenets in the web app.
-|	|	|	├──... 				# The UI componenets implementations.
-|   |   ├── utils				# Holds helper logic files.
+├── client              # UI of the web application (View part of the MVC architecture)
+|   ├── public          # contain the public files such as the index.html, the main page.
+|   ├── src             # UI implementation folder.
+|   |   ├── api         # HTTP requests implemantation files.	
+|   |   ├── components	# The different UI componenets in the web app.
+|   |   |   ├──...      # The UI componenets implementations.
+|   |   ├── utils       # Holds helper logic files.
 ├── Server
-|   ├── controller				# controller part of the MVC architecture.
-|   |   ├── anomaly				# implements the get http request for anomaly
-|   |   ├── model				# implements the get http for model 
-|   |   ├── models				# implements the get http for models
-|   ├── lib						# anomaly detection logic.
-|   ├── model					# the model part of the MVC architecture whice communicates with the data base.
+|   ├── controller      # controller part of the MVC architecture.
+|   |   ├── anomaly     # implements the get http request for anomaly
+|   |   ├── model       # implements the get http for model 
+|   |   ├── models      # implements the get http for models
+|   ├── lib             # anomaly detection logic.
+|   ├── model           # the model part of the MVC architecture whice communicates with the data base.
 ```
 
 ## Requirements:

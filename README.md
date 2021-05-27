@@ -20,6 +20,8 @@ It will present the anomalies of a chosen flight paramater graphically in a tabl
 4. visuallization of the anomalies in a graph.
 5. REST API for http requests from the server.
 
+![](ReadmePics/webapp.png)
+
 ## Folder Structure
 
 ```

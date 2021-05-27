@@ -87,8 +87,10 @@ export default function Graph({ selectedFeature, anomalies, flightDuration }) {
     if (active) {
       return (
         <div className="tooltip-container">
+          <p>anomaly : {payload[0]?.payload?.payload?.isAnomaly.toString()}</p>
           <p>start : {payload[0]?.payload?.payload?.start}</p>
           <p>end : {payload[0]?.payload?.payload?.end}</p>
+          <p>duration : {payload[0]?.payload?.payload?.duration}</p>
         </div>
       );
     }

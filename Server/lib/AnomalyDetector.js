@@ -324,7 +324,7 @@ function data_to_anomaly(anomal, anomKeys) {
     if (!(anomKeys[i] in anomaly)) anomaly[anomKeys[i]] = [];
   }
   completeAnomaly.anomalies = anomaly;
-  completeAnomaly.reason = "beacuse we must write one";
+  completeAnomaly.reason = "Higher than threshold";
   return completeAnomaly;
 }
 

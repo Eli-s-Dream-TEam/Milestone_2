@@ -44,13 +44,12 @@ It will present the anomalies of a chosen flight paramater graphically in a tabl
 
 ## Requirements:
 * Chrome web browser
-* Visual Studio Code IDE
 * Node.js 14.16.1 (or higher)
 * npm 6.14.12 (or higher)
 
 ## Compiling and running
 1. Clone/download this repo.
-2. open the folder in VS-code IDE.
+2. open the folder in an IDE
 3. open a local terminal and naviagte to the "client" directory and enter "npm install" 
 4. navigate to the "Server" directory and enter "npm install"
 5. enter "npm start" to run the server.

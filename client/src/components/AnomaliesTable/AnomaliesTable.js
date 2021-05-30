@@ -61,7 +61,13 @@ export default function AnomaliesTable({ anomalies, onRowClick }) {
   for (var key in anomalies["anomalies"]) {
     const featureName = key;
     var span = specialString(anomalies["anomalies"][key]);
-    var reason = anomalies["reason"];
+    var reason;
+    if (anomalies["anomalies"][key].length == 0) {
+      reason = "-";
+    } else {
+      reason = anomalies["reason"];
+    }
+
     rows.push({ featureName, span, reason });
   }
 

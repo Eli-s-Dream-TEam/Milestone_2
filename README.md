@@ -60,4 +60,4 @@ stages 3 and 4 will install the different requirements of the UI and the server 
 
 ## Additional Links
 - [Project's UML  diagram.](https://github.com/Eli-s-Dream-TEam/Milestone_2/blob/main/UMLDiagram.pdf)
-- [Short instructional video about the project.](https://www.youtube.com/watch?v=OkbNiaYKxJ4)
+- [Short instructional video about the project.](https://www.youtube.com/watch?v=Rtib_R_Ls4Y)

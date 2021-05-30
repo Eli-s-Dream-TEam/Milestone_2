@@ -59,5 +59,5 @@ It will present the anomalies of a chosen flight paramater graphically in a tabl
 stages 3 and 4 will install the different requirements of the UI and the server tools being used. (react requirments, express ...)
 
 ## Additional Links
-* Project's UML diagram
-* Short instructional video about the project.
+- [Project's UML  diagram.](https://github.com/Eli-s-Dream-TEam/Milestone_2/blob/main/UMLDiagram.pdf)
+- [Short instructional video about the project.](https://www.youtube.com/watch?v=OkbNiaYKxJ4)
